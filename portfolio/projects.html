@@ -1,0 +1,168 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mes Projets</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header>
+    <nav>
+        <ul>
+            <li><a href="index.html" class="btn-2">Accueil</a></li>
+            <li><a href="skills.html" class="btn-2">Compétences</a></li>
+            <li><a href="projects.html" class="btn-2 active">Projets</a></li>
+            <li><a href="certifications.html" class="btn-2">Certifications</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main class="fade-bg main-content">
+    <section class="projects-container">
+        <h1>Mes Projets</h1>
+
+        <!-- Filtre de catégories -->
+        <div class="project-filter">
+            <label for="project-category">Filtrer par catégorie :</label>
+            <select id="project-category" name="project-category">
+                <option value="all">Tous</option>
+                <option value="formation">Formation</option>
+                <option value="stage">Stage</option>
+                <option value="personnel">Personnel</option>
+            </select>
+        </div>
+
+        <div class="projects-grid">
+            <!-- Project 1: Formation -->
+            <div class="project-card" data-category="formation">
+                <div class="project-image" style="background-color: var(--color3);">
+                    <img src="images/projects/albumphoto.jpg"
+                         alt="Application Album Photo"
+                         width="400" height="300" loading="lazy">
+                </div>
+                <div class="project-info">
+                    <h2>Album Photo</h2>
+                    <p class="project-tech">HTML, CSS, PHP</p>
+                    <p class="project-desc">Création d'une application d'albums photo permettant aux utilisateurs de gérer leurs images.</p>
+                    <div class="project-links">
+                        <a href="https://example.com/demo/albumphoto" class="btn-2 small" target="_blank">Voir la Démo</a>
+                        <a href="https://github.com/username/albumphoto" class="btn-2 small" target="_blank">Code Source</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 2: Formation -->
+            <div class="project-card" data-category="formation">
+                <div class="project-image" style="background-color: var(--color4);">
+                    <img src="images/projects/budgetapp.jpg" alt="Application de Gestion de Budget" width="400" height="300" loading="lazy">
+                </div>
+                <div class="project-info">
+                    <h2>App de gestion de budget</h2>
+                    <p class="project-tech">Vue.js, Firebase</p>
+                    <p class="project-desc">Application pour suivre et gérer les dépenses avec des mises à jour en temps réel.</p>
+                    <div class="project-links">
+                        <a href="https://example.com/demo/budgetapp" class="btn-2 small" target="_blank">Voir la Démo</a>
+                        <a href="https://github.com/username/budgetapp" class="btn-2 small" target="_blank">GitHub</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 3: Formation -->
+            <div class="project-card" data-category="formation">
+                <div class="project-image" style="background-color: var(--color2);">
+                    <img src="images/projects/kanbanapp.jpg" alt="Application Kanban" width="400" height="300" loading="lazy">
+                </div>
+                <div class="project-info">
+                    <h2>App de Kanban</h2>
+                    <p class="project-tech">ReactJS, NextJS, Kotlin</p>
+                    <p class="project-desc">Application mobile de gestion de tâches avec une interface Kanban.</p>
+                    <div class="project-links">
+                        <a href="https://example.com/demo/kanban" class="btn-2 small" target="_blank">Voir la Démo</a>
+                        <a href="https://github.com/username/kanban" class="btn-2 small" target="_blank">GitHub</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 4: Stage -->
+            <div class="project-card" data-category="stage">
+                <div class="project-image" style="background-color: var(--color1);">
+                    <img src="images/projects/crm.jpg" alt="Système CRM" width="400" height="300" loading="lazy">
+                </div>
+                <div class="project-info">
+                    <h2>Système CRM</h2>
+                    <p class="project-tech">Laravel, MySQL</p>
+                    <p class="project-desc">Développement d'un système de gestion de la relation client pour une entreprise pendant un stage.</p>
+                    <div class="project-links">
+                        <a href="https://example.com/demo/crm" class="btn-2 small" target="_blank">Voir la Démo</a>
+                        <a href="https://github.com/username/crm" class="btn-2 small" target="_blank">GitHub</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 5: Personnel -->
+            <div class="project-card" data-category="personnel">
+                <div class="project-image" style="background-color: var(--color2);">
+                    <img src="images/projects/portfolio.jpg" alt="Portfolio Personnel" width="400" height="300" loading="lazy">
+                </div>
+                <div class="project-info">
+                    <h2>Portfolio Personnel</h2>
+                    <p class="project-tech">HTML, CSS, JavaScript</p>
+                    <p class="project-desc">Création d'un portfolio pour présenter mes compétences et projets, développé par initiative personnelle.</p>
+                    <div class="project-links">
+                        <a href="https://example.com/portfolio" class="btn-2 small" target="_blank">Voir la Démo</a>
+                        <a href="https://github.com/username/portfolio" class="btn-2 small" target="_blank">GitHub</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <p>© <span id="year"></span> Portfolio. Tous droits réservés. Amaury Vidal 2025.</p>
+</footer>
+
+<script src="js/main.js"></script>
+<script src="js/projects.js"></script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Certifications</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header>
+    <nav>
+        <ul>
+            <li><a href="index.html" class="btn-2">Home</a></li>
+            <li><a href="skills.html" class="btn-2">Skills</a></li>
+            <li><a href="projects.html" class="btn-2">Projects</a></li>
+            <li><a href="certifications.html" class="btn-2 active">Certifications</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main class="fade-bg main-content">
+    <section class="certifications-container">
+        <h1>My Certifications</h1>
+
+        <div class="certifications-timeline">
+            <!-- Certification 1 -->
+            <div class="certification-item">
+                <div class="certification-date">2023</div>
+                <div class="certification-content">
+                    <h2>Advanced JavaScript Concepts</h2>
+                    <p class="certification-issuer">Udemy</p>
+                    <p class="certification-desc">Mastered advanced JavaScript patterns, async programming, and modern ES6+ features.</p>
+                    <a href="#" class="btn-2 small view-certificate"
+                       data-certificate-url="images\certificates\certificate1.jpg"
+                       data-certificate-title="Advanced JavaScript Concepts">View Certificate</a>
+                </div>
+            </div>
+
+            <!-- Certification 2 -->
+            <div class="certification-item">
+                <div class="certification-date">2022</div>
+                <div class="certification-content">
+                    <h2>AWS Certified Developer</h2>
+                    <p class="certification-issuer">Amazon Web Services</p>
+                    <p class="certification-desc">Demonstrated proficiency in developing and maintaining AWS applications.</p>
+                    <a href="#" class="btn-2 small view-certificate"
+                       data-certificate-url="images\certificates\certificate2.jpg"
+                       data-certificate-title="AWS Certified Developer">View Certificate</a>
+                </div>
+            </div>
+
+            <!-- Certification 3 -->
+            <div class="certification-item">
+                <div class="certification-date">2021</div>
+                <div class="certification-content">
+                    <h2>Full Stack Web Development</h2>
+                    <p class="certification-issuer">Coursera</p>
+                    <p class="certification-desc">Completed comprehensive training in front-end and back-end web development.</p>
+                    <a href="#" class="btn-2 small view-certificate"
+                       data-certificate-url="images\certificates\certificate3.jpg"
+                       data-certificate-title="Full Stack Web Development">View Certificate</a>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <p>&copy; <span id="year"></span> Portfolio. All rights reserved. Amaury Vidal 2025.</p>
+</footer>
+
+<!-- Certificate Modal -->
+<div id="certificateModal" class="modal">
+    <span class="close-modal">&times;</span>
+    <img class="modal-content" id="modalImage">
+    <div id="caption"></div>
+</div>
+
+<script src="js/main.js"></script>
+</body>
+</html>
